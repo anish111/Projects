@@ -1,0 +1,16 @@
+#!/bin/sh
+
+case $1 in
+-p )
+case $3 in
+-s ) java SSLSockTest $4 $5 $2
+;;
+* )java SockTest $3 $4 $2
+esac
+;;
+-s ) java SSLSockTest $2 $3
+;;
+* ) java SockTest $1 $2
+;;
+esac
+

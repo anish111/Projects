@@ -1,0 +1,91 @@
+#!/bin/bash
+cat /dev/null > tahoe_tput.txt
+cat /dev/null > tahoe_drate.txt
+cat /dev/null > tahoe_lat.txt
+cat /dev/null > reno_tput.txt
+cat /dev/null > reno_drate.txt
+cat /dev/null > reno_lat.txt
+cat /dev/null > newreno_tput.txt
+cat /dev/null > newreno_drate.txt
+cat /dev/null > newreno_lat.txt
+cat /dev/null > vegas_tput.txt
+cat /dev/null > vegas_drate.txt
+cat /dev/null > vegas_lat.txt
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp1.tcl Tahoe $i
+gawk -f thrput-exp1.awk out.tr
+done
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp1.tcl Reno $i
+gawk -f thrput-exp1.awk out.tr
+done
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp1.tcl Newreno $i
+gawk -f thrput-exp1.awk out.tr
+done
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp1.tcl Vegas $i
+gawk -f thrput-exp1.awk out.tr
+done
+
+#|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp1.tcl Tahoe $i
+gawk -f pdroprate-exp1.awk out.tr
+done
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp1.tcl Reno $i
+gawk -f pdroprate-exp1.awk out.tr
+done
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp1.tcl Newreno $i
+gawk -f pdroprate-exp1.awk out.tr
+done
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp1.tcl Vegas $i
+gawk -f pdroprate-exp1.awk out.tr
+done
+
+#|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp1.tcl Tahoe $i
+gawk -f latency-exp1.awk out.tr
+done
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp1.tcl Reno $i
+gawk -f latency-exp1.awk out.tr
+done
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp1.tcl Newreno $i
+gawk -f latency-exp1.awk out.tr
+done
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp1.tcl Vegas $i
+gawk -f latency-exp1.awk out.tr
+done
+
+#|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

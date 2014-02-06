@@ -1,0 +1,95 @@
+#!/bin/bash
+cat /dev/null > renoreno_tput.txt
+cat /dev/null > renoreno_drate.txt
+cat /dev/null > renoreno_lat.txt
+cat /dev/null > nrenoreno_tput.txt
+cat /dev/null > nrenoreno_drate.txt
+cat /dev/null > nrenoreno_lat.txt
+cat /dev/null > vegasvegas_tput.txt
+cat /dev/null > vegasvegas_drate.txt
+cat /dev/null > vegasvegas_lat.txt
+cat /dev/null > nrenovegas_tput.txt
+cat /dev/null > nrenovegas_drate.txt
+cat /dev/null > nrenovegas_lat.txt
+
+#|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp2.tcl Reno Reno $i
+gawk -f thrput-exp2.awk out.tr
+done
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp2.tcl Newreno Reno $i
+gawk -f thrput-exp2.awk out.tr
+done
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp2.tcl Vegas Vegas $i
+gawk -f thrput-exp2.awk out.tr
+done
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp2.tcl Newreno Vegas $i
+gawk -f thrput-exp2.awk out.tr
+done
+
+#|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp2.tcl Reno Reno $i
+gawk -f pdroprate-exp2.awk out.tr
+done
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp2.tcl Newreno Reno $i
+gawk -f pdroprate-exp2.awk out.tr
+done
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp2.tcl Vegas Vegas $i
+gawk -f pdroprate-exp2.awk out.tr
+done
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp2.tcl Newreno Vegas $i
+gawk -f pdroprate-exp2.awk out.tr
+done
+
+
+#|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp2.tcl Reno Reno $i
+gawk -f latency-exp2.awk out.tr
+done
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp2.tcl Newreno Reno $i
+gawk -f latency-exp2.awk out.tr
+done
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp2.tcl Vegas Vegas $i
+gawk -f latency-exp2.awk out.tr
+done
+
+for i in {1..10}
+do
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp2.tcl Newreno Vegas $i
+gawk -f latency-exp2.awk out.tr
+done
+
+
+#|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||

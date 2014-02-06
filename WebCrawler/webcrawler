@@ -1,0 +1,4 @@
+#!/bin/sh
+CLASSPATH=/home/anish111/
+java -classpath ./jsoup.jar:. WebCrawler $1 $2
+

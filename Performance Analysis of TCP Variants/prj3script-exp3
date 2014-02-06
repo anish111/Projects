@@ -1,0 +1,5 @@
+#!/bin/bash
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp3.tcl Reno DropTail
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp3.tcl Reno RED
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp3.tcl Sack1 DropTail
+/course/cs4700f12/ns-allinone-2.35/bin/ns simulation-exp3.tcl Sack1 RED

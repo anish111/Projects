@@ -1,0 +1,60 @@
+Team Name : targetrawsocket
+Members: Anish Deshmukh , Gauresh Pandit
+
+Problem Statement :
+Write a program called rawhttpget which uses SOCK_RAW/IPPROTO_RAW socket that takes a URL on the command line and downloads the associated file. 
+
+High-level Approach :
+
+1.Creation of Headers:
+In this project we have used a SOCK_RAW/IPPROTO_RAW socket for sending the packets and a SOCK_RAW/IPPROTO_TCP socket for the receiving packets.
+For sending the packets first we create the IP header by filling all the fields of the header.We first obtain the source ip address by pinging a
+DNS server and retrieving our ip from the socket created.Then we obtain the destination ip address from the url given.After ip header next is to construct
+the tcp header.We fill each value in the tcp header appropriately and create the header.After the headers are created the checksum is calculate and 
+inserted in the header.After the headers are completed the next step is to do a TCP handshake.
+
+2.TCP Handshake:
+In this first we send a SYN packet to the server and wait for the SYN + ACK packet.If the packet does not arrive within 1 minute we resend the SYN packet
+assuming a packet loss.After receiving its SYN+ACK we send the ACK packet incrementing the  sequence no by 1 to complete the handshake.
+
+3.HTTP Request:
+After this we send a HTTP GET request packet and wait for an ACK packet.If the packet does not arrive within 1 minute we resend the HTTP Request packet
+assuming a packet loss.After the HTTP request it acknowledged by the server it starts sending the data packets.
+
+4.Processing Received packets:
+The incoming packets are filtered by comparing the source and destination ipaddress and port numbers.For each valid incoming packet we first unpack the packet.
+Next we compute its checksum and compare with the checksum received in the packet.If it matches we proceed forward to process the packet.The first packet received
+is the HTTP packet with status 200.From this packet we separate the header and body parts.We store the Content-Length from the header part.We add the data part 
+to a dictionary with the sequence no of the packet as its index.Then we calculate the next expected sequence no of the packet by adding the current sequence number
+and the data length.Then each incoming packet is checked if its sequence no matches the expected sequence number.If it does not match it indicates a drop packet
+or an out of sequence packet which is then handled accordingly.Packet reordering is performed by using the dictionary which has the sequence number corresponding
+to its data.Lost packets are handled by sending a duplicate ACK for that packet.To know the last packet received from the server we decrese the content-length 
+variable by the data length of each packet.When the last packet is received or a FIN packet is send by the server we perfrom the steps for the TCP teardown.
+After teardown is initialised we write all the data stored in the the dictionary to a file.
+
+5. Teardown:
+After the last packet is received we send a ACK for that packet and also send a FIN + ACK packet to the server.Then  we wait for the server to send a ACK packet 
+to acknowledge our FIN + ACK packet and a FIN + ACK packet of its own. After we receive that we send a ACK packet incrementing its ack number by 1 to complete
+the 4 way teardown.
+If we receive a FIN packet from the server we send a ACK packet back to acknowledge it and the send a FIN + ACK of our own to terminnate the connection from our side.
+The connection closes as soon as we receive a ACK packet from the serve acknowledging our FIN packet.
+
+TCP/IP features implemented:
+1.IP and TCP header creation
+2.Multiplexing packets based on source and destination address and portnumbers
+3.Reliable and Inorder delivery of packets
+4.Handling restransmission and duplicate packets
+5.Time-out functionality
+
+
+Challenges Faced:
+1. Understanding how retrieve the source and gateway mac-id and also source ip address.
+2. Calculating the correct the values for ip and tcp checksum.
+3. Implementing the timeout functionality.
+4. Reordering out of sequence packets while writing to the file.
+
+Testing:
+1. Running the program to download different sizes of file
+2. Changing the TCP window size to different sizes to ensure it works for a range of values.
+
+
